@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { Mesh } from 'three'
 
 //textures
 
@@ -14,7 +15,7 @@ const doorHeightTexture = textureLoader.load('/textures/door/height.jpg')
 const doorNormalTexture = textureLoader.load('/textures/door/normal.jpg')
 const doorMetalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
 const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
-const matcapTexture = textureLoader.load('/textures/matcaps/1.png')
+const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
 const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
 
 
@@ -28,7 +29,18 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 //object
-const material = new THREE.MeshBasicMaterial({color:0xf32345});
+// const material = new THREE.MeshBasicMaterial();
+// material.map = doorColorTexture
+// material.color.set('lightgreen')
+
+// const material = new THREE.MeshNormalMaterial()
+// // material.wireframe = true
+// material.flatShading = true
+
+// const material = new THREE.MeshMatcapMaterial()
+// material.matcap = matcapTexture
+
+const material = new THREE.MeshDepthMaterial()
 
 const sphere =  new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
