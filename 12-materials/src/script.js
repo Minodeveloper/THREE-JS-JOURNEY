@@ -2,6 +2,11 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Mesh } from 'three'
+import * as dat from 'dat.gui'
+
+
+//debug
+const gui = new dat.GUI();
 
 //textures
 
@@ -40,7 +45,23 @@ const scene = new THREE.Scene()
 // const material = new THREE.MeshMatcapMaterial()
 // material.matcap = matcapTexture
 
-const material = new THREE.MeshDepthMaterial()
+// const material = new THREE.MeshDepthMaterial()
+// const material = new THREE.MeshLambertMaterial()
+// const material = new THREE.MeshPhongMaterial()
+// material.shininess = 500
+// const material = new THREE.MeshToonMaterial()
+
+const material = new THREE.MeshStandardMaterial()
+material.metalness = 0.45
+material.roughness = 0.45
+material.map = doorColorTexture
+material.aoMap = doorAmbientOcclusionTexture
+material.aoMapIntensity = 1
+
+gui.add(material, 'metalness').min(0).max(1).step(0.001)
+gui.add(material, 'roughness').min(0).max(1).step(0.001)
+gui.add(material, 'aoMapIntensity').min(0).max(10).step(0.001)
+
 
 const sphere =  new THREE.Mesh(
     new THREE.SphereGeometry(0.5, 16, 16),
@@ -53,14 +74,29 @@ const plane = new THREE.Mesh(
     material
 )
 
+plane.geometry.setAttribute('uv2', 
+new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2))
+
 const torus = new THREE.Mesh(
     new THREE.TorusGeometry(0.5,0.2,16,32),
     material
 )
 torus.position.x = 1.5
+torus.geometry.setAttribute('uv2', 
+new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2))
 
 scene.add(sphere,plane, torus)
 // scene.add(plane)
+
+// light 
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+scene.add(ambientLight)
+
+const pointLight = new THREE.PointLight(0xffffff, 0.5)
+pointLight.position.x = -1;
+pointLight.position.y = 1;
+pointLight.position.z = 1;
+scene.add(pointLight)
 
 /**
  * Sizes
