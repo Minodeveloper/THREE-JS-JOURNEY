@@ -11,6 +11,7 @@ const gui = new dat.GUI();
 //textures
 
 const textureLoader = new THREE.TextureLoader()
+const cubeTextureLoader = new THREE.CubeTextureLoader()
 
 
 const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
@@ -23,6 +24,15 @@ const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
 const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
 
+
+const environmentMapTexture = cubeTextureLoader.load([
+    '/textures/environmentMaps/3/px.jpg',
+    '/textures/environmentMaps/3/px.jpg',
+    '/textures/environmentMaps/3/py.jpg',
+    '/textures/environmentMaps/3/nx.jpg',
+    '/textures/environmentMaps/3/pz.jpg',
+    '/textures/environmentMaps/3/nz.jpg',
+])
 
 /**
  * Base
@@ -51,26 +61,40 @@ const scene = new THREE.Scene()
 // material.shininess = 500
 // const material = new THREE.MeshToonMaterial()
 
+// const material = new THREE.MeshStandardMaterial()
+// material.metalness = 0.45
+// material.roughness = 0.45
+// material.map = doorColorTexture
+// material.aoMap = doorAmbientOcclusionTexture
+// material.aoMapIntensity = 1
+// material.displacementMap = doorHeightTexture
+// material.displacementScale = 0.05
+// material.metalnessMap = doorMetalnessTexture
+// material.roughnessMap = doorRoughnessTexture
+// material.normalMap = doorNormalTexture
+// material.transparent = true
+// material.alphaMap = doorAlphaTexture
+
+
 const material = new THREE.MeshStandardMaterial()
-material.metalness = 0.45
-material.roughness = 0.45
-material.map = doorColorTexture
-material.aoMap = doorAmbientOcclusionTexture
-material.aoMapIntensity = 1
+material.metalness = 0.7
+material.roughness = 0.21
+material.envMap = environmentMapTexture
 
 gui.add(material, 'metalness').min(0).max(1).step(0.001)
 gui.add(material, 'roughness').min(0).max(1).step(0.001)
 gui.add(material, 'aoMapIntensity').min(0).max(10).step(0.001)
+gui.add(material, 'displacementScale').min(0).max(10).step(0.001)
 
 
 const sphere =  new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
+    new THREE.SphereGeometry(0.5, 64, 64),
     material
 )
 sphere.position.x = -1.5
 
 const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(1,1),
+    new THREE.PlaneGeometry(1,1, 100, 100),
     material
 )
 
@@ -78,7 +102,7 @@ plane.geometry.setAttribute('uv2',
 new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2))
 
 const torus = new THREE.Mesh(
-    new THREE.TorusGeometry(0.5,0.2,16,32),
+    new THREE.TorusGeometry(0.5,0.2,64,128),
     material
 )
 torus.position.x = 1.5
@@ -154,12 +178,12 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
 
     //upfate object
-    sphere.rotation.y  = elapsedTime * 0.2
-    plane.rotation.y  = elapsedTime * 0.2
-    torus.rotation.y  = elapsedTime * 0.2
-    sphere.rotation.x  = elapsedTime * 0.4
-    plane.rotation.x  = elapsedTime * 0.4
-    torus.rotation.x  = elapsedTime * 0.4
+    // sphere.rotation.y  = elapsedTime * 0.2
+    // plane.rotation.y  = elapsedTime * 0.2
+    // torus.rotation.y  = elapsedTime * 0.2
+    sphere.rotation.z  = elapsedTime * 0.4
+    plane.rotation.z  = elapsedTime * 0.4
+    torus.rotation.z  = elapsedTime * 0.4
 
 
     // Update controls
