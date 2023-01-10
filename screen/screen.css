@@ -1,13 +1,14 @@
 .row0 {
-    height:auto;
-    background-color: aqua;
+    height:5px;
+    /* width: auto; */
+    background-color: rgb(208, 255, 0);
     display: flex;
-    gap: 3px;
+    gap: 1px;
     margin-bottom: 2px;
 }
 
 .pixel {
-    width: 20px;
-    height: 20px;
+    width: 5px;
+    height: 5px;
     background-color: black;
 }
