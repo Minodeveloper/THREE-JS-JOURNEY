@@ -1,0 +1,13 @@
+.row0 {
+    height:auto;
+    background-color: aqua;
+    display: flex;
+    gap: 3px;
+    margin-bottom: 2px;
+}
+
+.pixel {
+    width: 20px;
+    height: 20px;
+    background-color: black;
+}
