@@ -23,11 +23,28 @@ const textureLoader = new THREE.TextureLoader()
 /**
  * Test cube
  */
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial()
-)
-scene.add(cube)
+// const cube = new THREE.Mesh(
+//     new THREE.BoxGeometry(1, 1, 1),
+//     new THREE.MeshBasicMaterial({color:0x5ff078})
+// )
+// scene.add(cube)
+
+/* 
+    particles
+*/
+//geomettry
+const particleGeometry = new THREE.SphereGeometry(1,32,32)
+//material
+const particlesMaterial = new THREE.PointsMaterial()
+particlesMaterial.size = 0.02
+particlesMaterial.sizeAttenuation = true
+// const particlesMaterial = new THREE.PointsMaterial({
+//     size:0.02,
+//     sizeAttenuation: true
+// })
+//points
+const particles = new THREE.Points(particleGeometry, particlesMaterial)
+scene.add(particles)
 
 /**
  * Sizes
