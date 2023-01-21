@@ -19,7 +19,7 @@ const scene = new THREE.Scene()
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
-
+const particleTexture = textureLoader.load('/textures/particles/2.png')
 /**
  * Test cube
  */
@@ -38,10 +38,17 @@ const particleGeometry = new THREE.BufferGeometry(1,32,32)
 const count = 50000
 
 const positions = new Float32Array(count * 3)
+const colors = new Float32Array(count * 3)
 
 for (let i = 0; i < count * 3 ; i++){
     positions[i] = (Math.random() - 0.5) * 10
+    colors[i] = Math.random()
+
 }
+particleGeometry.setAttribute(
+    'color',
+    new THREE.BufferAttribute(colors, 3)
+)
 
 particleGeometry.setAttribute(
     'position',
@@ -49,9 +56,18 @@ particleGeometry.setAttribute(
 )
 
 //material
-const particlesMaterial = new THREE.PointsMaterial()
-particlesMaterial.size = 0.02
+const particlesMaterial = new THREE.PointsMaterial({map:particleTexture})
+// particlesMaterial.color = new THREE.Color(0xff009f)
+particlesMaterial.size = 0.1
 particlesMaterial.sizeAttenuation = true
+particlesMaterial.transparent = true
+particlesMaterial.alphaMap = particleTexture
+particlesMaterial.depthWrite = false
+particlesMaterial.blending = THREE.AdditiveBlending
+// particlesMaterial.depthTest = false
+// particlesMaterial.alphaTest = 0.001
+particlesMaterial.vertexColors = true
+
 // const particlesMaterial = new THREE.PointsMaterial({
 //     size:0.02,
 //     sizeAttenuation: true
@@ -114,6 +130,17 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    //update particles all at ones 
+    // particles.rotation.y = elapsedTime * 0.2
+    for(let i = 0; i < count; i++)
+    {
+        const i3 = i * 3
+        const x = particleGeometry.attributes.position.array[i3]
+        particleGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime + x)
+
+    }
+    particleGeometry.attributes.position.needsUpdate = true
 
     // Update controls
     controls.update()
