@@ -54,6 +54,7 @@ const generateGalaxy = () =>{
     geometry.setAttribute(
         'position',
         new THREE.BufferAttribute(positions, 3)
+        
         )
         
         //materia
