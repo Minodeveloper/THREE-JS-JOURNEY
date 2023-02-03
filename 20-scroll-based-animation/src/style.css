@@ -8,6 +8,8 @@ html,
 body
 {
     /* overflow: hidden; */
+    scroll-behavior: smooth;
+    background-color: #1e1a20;
 }
 
 .webgl
@@ -31,7 +33,7 @@ body
     font-size: 7vmin;
     padding-left: 10%;
     padding-right: 10%;
-    
+
     outline: 2px solid salmon;
     
 }
