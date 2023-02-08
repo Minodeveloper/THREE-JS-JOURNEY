@@ -116,7 +116,6 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  * Animate
  */
 const clock = new THREE.Clock()
-
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
