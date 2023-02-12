@@ -1,4 +1,23 @@
-
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+#_11{
+    background-color: red;
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    gap: 2px 2px;
+}
+.pixel{
+    background-color: black;
+}
+/* 
 .row0 {
     height:5px;
     width: 725px;
@@ -13,4 +32,4 @@
     width: 5px;
     height: 5px;
     background-color: black;
-}
+} */
