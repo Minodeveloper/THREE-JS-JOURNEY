@@ -17,6 +17,7 @@ mypix.st
 
 let i = 1
 
+
 // setInterval(() => {
 //     mypix.style.gridArea = `1 / ${i} / 2 / ${i+1}`
 //         i++
